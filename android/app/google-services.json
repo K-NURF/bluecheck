@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "997787445623-2cq9u46794sev4ee7ah7m15o968geaof.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.strathmore.bluecheck",
+            "certificate_hash": "1ae180aa3bb1a28386acc9d0783b2a2ecf6be08f"
+          }
+        },
+        {
           "client_id": "997787445623-4kt410hkf8km4sdrv06986kkdiovs1bq.apps.googleusercontent.com",
           "client_type": 3
         }
