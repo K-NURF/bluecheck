@@ -6,6 +6,7 @@ import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
 import 'package:bluecheck/views/login_view.dart';
 import 'package:bluecheck/views/register_view.dart';
+import 'package:bluecheck/views/verify_email_view.dart';
 import 'package:bluecheck/views/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +49,7 @@ class HomePage extends StatelessWidget {
       if (state is AuthStateLoggedIn) {
         return const WelcomeView();
       } else if (state is AuthStateNeedsVerification) {
-        return const WelcomeView();
+        return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {
         return const LoginView();
       } else if (state is AuthStateRegistering) {
