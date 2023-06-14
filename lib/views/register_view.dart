@@ -4,7 +4,6 @@ import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/utilities/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 

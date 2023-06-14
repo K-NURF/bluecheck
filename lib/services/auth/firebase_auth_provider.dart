@@ -7,8 +7,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:firebase_auth/firebase_auth.dart'
-    show FirebaseAuth, FirebaseAuthException;
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -28,11 +26,8 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
-      print(email);
-      print('creating firebase user');
       final user = currentUser;
       if (user != null) {
-        print(user);
         return user;
       } else {
         throw UserNotLoggedInException;
@@ -134,22 +129,17 @@ class FirebaseAuthProvider implements AuthProvider {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     GoogleSignIn googleSignIn = GoogleSignIn();
     try {
-      print('sent account select request');
       GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       // Retrieve the authentication details
       GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-      print('googleAuth detaills llllllllllllllllllldddddddddddddddddddddddd');
-      print(googleAuth);
       OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      print('Google Sign up is now sending credentials to Firebase');
       await firebaseAuth.signInWithCredential(credential);
 
       final user = currentUser;
-      print(user);
       if (user != null) {
         return user;
       } else {
@@ -158,8 +148,6 @@ class FirebaseAuthProvider implements AuthProvider {
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LogInWithGoogleFailure.fromCode(e.code);
     } catch (e) {
-      print('did not sing innnnnnnnnnnnn');
-      print(e);
       throw const LogInWithGoogleFailure();
     }
   }

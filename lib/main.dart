@@ -5,7 +5,6 @@ import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
 import 'package:bluecheck/views/login_view.dart';
-import 'package:bluecheck/views/register_dummy.dart';
 import 'package:bluecheck/views/register_view.dart';
 import 'package:bluecheck/views/welcome_view.dart';
 import 'package:flutter/material.dart';
