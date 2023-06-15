@@ -19,7 +19,7 @@ class _WelcomeViewState extends State<WelcomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Your Notes'),
+          title: const Text('Welcome to BlueCheck'),
           actions: [
             PopupMenuButton<MenuAction>(onSelected: (value) async {
               switch (value) {
@@ -41,7 +41,10 @@ class _WelcomeViewState extends State<WelcomeView> {
             })
           ],
         ),
-        body: const Text('You have logged in'),
+        body: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text('You have logged in'),
+        ),
     );
   }
 }

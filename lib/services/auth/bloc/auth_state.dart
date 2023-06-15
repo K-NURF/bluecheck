@@ -2,7 +2,6 @@ import 'package:bluecheck/services/auth/auth_user.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
-
 @immutable
 abstract class AuthState {
   final bool isLoading;
@@ -40,7 +39,10 @@ class AuthStateLoggedIn extends AuthState {
 }
 
 class AuthStateNeedsVerification extends AuthState {
-  const AuthStateNeedsVerification({required super.isLoading});
+  final Exception? exception;
+  final bool notVerified;
+  const AuthStateNeedsVerification(
+      {required super.isLoading, required this.notVerified, this.exception,super.loadingText});
 }
 
 class AuthStateLoggedOut extends AuthState with EquatableMixin {

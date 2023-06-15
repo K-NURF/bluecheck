@@ -4,7 +4,7 @@ import 'package:bluecheck/utilities/dialogs/generic_dialog.dart';
 Future<void> showErrorDialog(BuildContext context, String text) {
   return showGenericDialog<void>(
     context: context,
-    title: 'An error occured',
+    title: 'Ooops',
     content: text,
     optionsBuilder: () => {
       'OK': null

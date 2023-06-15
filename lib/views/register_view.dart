@@ -78,9 +78,6 @@ class _RegisterViewState extends State<RegisterView> {
         _state.status.isSuccess ? successSnackBar : failureSnackBar,
       );
 
-    if (_state.status.isSuccess) {
-      _resetForm();
-    }
   }
 
   Future<void> _submitForm() async {
@@ -95,12 +92,12 @@ class _RegisterViewState extends State<RegisterView> {
         );
   }
 
-  void _resetForm() {
-    _key.currentState!.reset();
-    _emailController.clear();
-    _passwordController.clear();
-    setState(() => _state = MyFormState());
-  }
+  // void _resetForm() {
+  //   _key.currentState!.reset();
+  //   _emailController.clear();
+  //   _passwordController.clear();
+  //   setState(() => _state = MyFormState());
+  // }
 
   @override
   void initState() {

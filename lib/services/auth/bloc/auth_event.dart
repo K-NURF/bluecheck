@@ -13,6 +13,10 @@ class AuthEventSendEmailVerification extends AuthEvent {
   const AuthEventSendEmailVerification();
 }
 
+class AuthEventCheckVerification extends AuthEvent {
+  const AuthEventCheckVerification();
+}
+
 class AuthEventLogIn extends AuthEvent {
   final String email; 
   final String password;

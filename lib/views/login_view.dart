@@ -69,9 +69,6 @@ class _LoginViewState extends State<LoginView> {
         _state.status.isSuccess ? successSnackBar : failureSnackBar,
       );
 
-    if (_state.status.isSuccess) {
-      _resetForm();
-    }
   }
 
   Future<void> _submitForm() async {
@@ -85,12 +82,12 @@ class _LoginViewState extends State<LoginView> {
         );
   }
 
-  void _resetForm() {
-    _key.currentState!.reset();
-    _emailController.clear();
-    _passwordController.clear();
-    setState(() => _state = MyFormState());
-  }
+  // void _resetForm() {
+  //   _key.currentState!.reset();
+  //   _emailController.clear();
+  //   _passwordController.clear();
+  //   setState(() => _state = MyFormState());
+  // }
 
   @override
   void initState() {
