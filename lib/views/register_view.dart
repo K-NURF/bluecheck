@@ -6,6 +6,7 @@ import 'package:bluecheck/utilities/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:lottie/lottie.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -65,19 +66,18 @@ class _RegisterViewState extends State<RegisterView> {
       ..nextFocus()
       ..unfocus();
 
-    const successSnackBar = SnackBar(
-      content: Text('Submitted successfully! 🎉'),
-    );
-    const failureSnackBar = SnackBar(
-      content: Text('Something went wrong... 🚨'),
-    );
+    // const successSnackBar = SnackBar(
+    //   content: Text('Submitted successfully! 🎉'),
+    // );
+    // const failureSnackBar = SnackBar(
+    //   content: Text('Something went wrong... 🚨'),
+    // );
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        _state.status.isSuccess ? successSnackBar : failureSnackBar,
-      );
-
+    // ScaffoldMessenger.of(context)
+    //   ..hideCurrentSnackBar()
+    //   ..showSnackBar(
+    //     _state.status.isSuccess ? successSnackBar : failureSnackBar,
+    //   );
   }
 
   Future<void> _submitForm() async {
@@ -136,75 +136,116 @@ class _RegisterViewState extends State<RegisterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Sign Up')),
         body: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
           child: Form(
               key: _key,
-              child: Column(
+              child: ListView(
                 children: [
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: 'Email',
-                      helperText: 'A valid email e.g. joe.doe@gmail.com',
+                  Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            height: 70,
+                            width: 70,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Lottie.asset(
+                          'assets/lottie/87845-hello.json',
+                          width: 250,
+                          height: 250,
+                        ),
+                      ],
                     ),
-                    validator: (_) => _state.email.displayError?.text(),
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
                   ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.lock),
-                      helperText:
-                          'At least 8 characters including one letter and number',
-                      helperMaxLines: 2,
-                      labelText: 'Password',
-                      errorMaxLines: 2,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.email),
+                            labelText: 'Email',
+                            helperText: 'A valid email e.g. joe.doe@gmail.com',
+                          ),
+                          validator: (_) => _state.email.displayError?.text(),
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 5),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.lock),
+                            helperText:
+                                'At least 8 characters including one letter and number',
+                            helperMaxLines: 2,
+                            labelText: 'Password',
+                            errorMaxLines: 2,
+                          ),
+                          validator: (_) =>
+                              _state.password.displayError?.text(),
+                          obscureText: true,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        const SizedBox(height: 5),
+                        TextFormField(
+                          controller: _confirmPasswordController,
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.lock),
+                            labelText: 'Confirm Password',
+                            errorMaxLines: 2,
+                          ),
+                          validator: (_) =>
+                              _state.confirmPassword.displayError?.text(),
+                          obscureText: true,
+                          textInputAction: TextInputAction.done,
+                        ),
+                      ],
                     ),
-                    validator: (_) => _state.password.displayError?.text(),
-                    obscureText: true,
-                    textInputAction: TextInputAction.done,
                   ),
-                  TextFormField(
-                    controller: _confirmPasswordController,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: 'Confirm Password',
-                      errorMaxLines: 2,
-                    ),
-                    validator: (_) =>
-                        _state.confirmPassword.displayError?.text(),
-                    obscureText: true,
-                    textInputAction: TextInputAction.done,
-                  ),
-                  const SizedBox(height: 10),
-                  if (_state.status.isInProgress)
-                    const CircularProgressIndicator()
-                  else
-                    ElevatedButton(
-                      onPressed: _onSubmit,
-                      child: const Text('Sign Up'),
-                    ),
-                  ElevatedButton.icon(
-                    key: const Key('loginForm_googleLogin_raisedButton'),
-                    label: const Text(
-                      'Continue with Google',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                  Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      if (_state.status.isInProgress)
+                        const CircularProgressIndicator()
+                      else
+                        ElevatedButton(
+                          onPressed: _onSubmit,
+                          child: const Text('Create account'),
+                        ),
+                      TextButton(
+                        onPressed: () {
+                          context.read<AuthBloc>().add(
+                                const AuthEventLogOut(),
+                              );
+                        },
+                        child: const Text("Go back to Login"),
                       ),
-                      // backgroundColor: theme.colorScheme.secondary,
-                    ),
-                    icon:
-                        const Icon(Icons.gps_off_outlined, color: Colors.white),
-                    onPressed: () => context
-                        .read<AuthBloc>()
-                        .add(const AuthEventGoogleLogin()),
+                      ElevatedButton.icon(
+                        key: const Key('loginForm_googleLogin_raisedButton'),
+                        label: const Text(
+                          'Continue with Google',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          // backgroundColor: theme.colorScheme.secondary,
+                        ),
+                        icon: const Icon(Icons.gps_off_outlined,
+                            color: Colors.white),
+                        onPressed: () => context
+                            .read<AuthBloc>()
+                            .add(const AuthEventGoogleLogin()),
+                      ),
+                    ],
                   ),
                 ],
               )),

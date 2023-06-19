@@ -6,6 +6,7 @@ import 'package:bluecheck/utilities/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -56,19 +57,18 @@ class _LoginViewState extends State<LoginView> {
       ..nextFocus()
       ..unfocus();
 
-    const successSnackBar = SnackBar(
-      content: Text('Submitted successfully! 🎉'),
-    );
-    const failureSnackBar = SnackBar(
-      content: Text('Something went wrong... 🚨'),
-    );
+    // const successSnackBar = SnackBar(
+    //   content: Text('Submitted successfully! 🎉'),
+    // );
+    // const failureSnackBar = SnackBar(
+    //   content: Text('Something went wrong... 🚨'),
+    // );
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        _state.status.isSuccess ? successSnackBar : failureSnackBar,
-      );
-
+    // ScaffoldMessenger.of(context)
+    //   ..hideCurrentSnackBar()
+    //   ..showSnackBar(
+    //     _state.status.isSuccess ? successSnackBar : failureSnackBar,
+    //   );
   }
 
   Future<void> _submitForm() async {
@@ -120,78 +120,110 @@ class _LoginViewState extends State<LoginView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Login')),
         body: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
           child: Form(
             key: _key,
-            child: Column(children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.email),
-                  labelText: 'Email',
-                  helperText: 'A valid email e.g. joe.doe@gmail.com',
+            child: ListView(children: [
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        height: 70,
+                        width: 70,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Lottie.asset(
+                      'assets/lottie/87845-hello.json',
+                      width: 250,
+                      height: 250,
+                    ),
+                  ],
                 ),
-                validator: (_) => _state.email.displayError?.text(),
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
               ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.lock),
-                  helperText:
-                      'At least 8 characters including one letter and number',
-                  helperMaxLines: 2,
-                  labelText: 'Password',
-                  errorMaxLines: 2,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.email),
+                        labelText: 'Email',
+                        helperText: 'A valid email e.g. joe.doe@gmail.com',
+                      ),
+                      validator: (_) => _state.email.displayError?.text(),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                    ),
+                  const SizedBox(height: 5),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.lock),
+                        helperText:
+                            'At least 8 characters including one letter and number',
+                        helperMaxLines: 2,
+                        labelText: 'Password',
+                        errorMaxLines: 2,
+                      ),
+                      validator: (_) => _state.password.displayError?.text(),
+                      obscureText: true,
+                      textInputAction: TextInputAction.done,
+                    ),
+                  ],
                 ),
-                validator: (_) => _state.password.displayError?.text(),
-                obscureText: true,
-                textInputAction: TextInputAction.done,
               ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                        const AuthEventForgotPassword(),
-                      );
-                },
-                child: const Text("Forgot Password?"),
-              ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                        const AuthEventShouldRegister(),
-                      );
-                },
-                child: const Text("Don't have an account yet? Register here!"),
-              ),
-              const SizedBox(height: 24),
-              if (_state.status.isInProgress)
-                const CircularProgressIndicator()
-              else
-                ElevatedButton(
-                  onPressed: _onSubmit,
-                  child: const Text('Submit'),
-                ),
-              ElevatedButton.icon(
-                key: const Key('loginForm_googleLogin_raisedButton'),
-                label: const Text(
-                  'SIGN IN WITH GOOGLE',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+              Column(
+                children: [
+                  const SizedBox(height: 10),
+                  if (_state.status.isInProgress)
+                    const CircularProgressIndicator()
+                  else
+                    ElevatedButton(
+                      onPressed: _onSubmit,
+                      child: const Text('Login'),
+                    ),
+                  TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventForgotPassword(),
+                          );
+                    },
+                    child: const Text("Forgot Password?"),
                   ),
-                  // backgroundColor: theme.colorScheme.secondary,
-                ),
-                icon: const Icon(Icons.gps_off_outlined, color: Colors.white),
-                onPressed: () =>
-                    context.read<AuthBloc>().add(const AuthEventGoogleLogin()),
+                  TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventShouldRegister(),
+                          );
+                    },
+                    child:
+                        const Text("Don't have an account yet? Sign Up here!"),
+                  ),
+                  ElevatedButton.icon(
+                    key: const Key('loginForm_googleLogin_raisedButton'),
+                    label: const Text(
+                      'SIGN IN WITH GOOGLE',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      // backgroundColor: theme.colorScheme.secondary,
+                    ),
+                    icon:
+                        const Icon(Icons.gps_off_outlined, color: Colors.white),
+                    onPressed: () => context
+                        .read<AuthBloc>()
+                        .add(const AuthEventGoogleLogin()),
+                  ),
+                ],
               ),
             ]),
           ),

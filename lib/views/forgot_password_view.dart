@@ -40,7 +40,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           if (state.exception != null) {
             // ignore: use_build_context_synchronously
             await showErrorDialog(context,
-                'We could not process your request. Please make sure you are a registered user, if not, go back and register');
+                'We could not process your request. Please make sure you have created an account, if not, go back and sign up');
           }
         }
       },
@@ -54,29 +54,40 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 children: [
                   const Text(
                       'Enter your email and we will send a password reset link'),
-                  TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      autocorrect: false,
-                      autofocus: true,
+                      TextFormField(
                       controller: _controller,
                       decoration: const InputDecoration(
-                        hintText: 'example@gmail.com',
-                      )),
-                  TextButton(
-                      onPressed: () {
-                        final email = _controller.text;
-                        context.read<AuthBloc>().add(
-                              AuthEventForgotPassword(email: email),
-                            );
-                      },
-                      child: const Text('Reset Password')),
-                  TextButton(
-                      onPressed: () {
-                        context.read<AuthBloc>().add(
-                              const AuthEventLogOut(),
-                            );
-                      },
-                      child: const Text('Go back to Login')),
+                        icon: Icon(Icons.email),
+                        labelText: 'Email',
+                        helperText: 'A valid email e.g. joe.doe@gmail.com',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                    ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 25),
+                                          child: Column(
+                                            children: [
+                                              ElevatedButton(
+                                                              onPressed: () {
+                                                                final email = _controller.text;
+                                                                context.read<AuthBloc>().add(
+                                                                      AuthEventForgotPassword(email: email),
+                                                                    );
+                                                              },
+                                                              child: const Text('Reset Password'),
+                                                            ),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                context.read<AuthBloc>().add(
+                                                                      const AuthEventLogOut(),
+                                                                    );
+                                                              },
+                                                              child: const Text('Go back to Login')),                                          ],
+                                          ),
+                                        ),
+
+
                 ],
               ))),
     );
