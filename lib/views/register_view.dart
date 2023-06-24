@@ -239,8 +239,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           // backgroundColor: theme.colorScheme.secondary,
                         ),
-                        icon: const Icon(Icons.gps_off_outlined,
-                            color: Colors.white),
+                        icon: Image.asset('assets/images/google-logo.png', height: 25),
                         onPressed: () => context
                             .read<AuthBloc>()
                             .add(const AuthEventGoogleLogin()),

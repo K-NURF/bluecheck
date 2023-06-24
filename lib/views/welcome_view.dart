@@ -3,6 +3,7 @@ import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/utilities/dialogs/logout_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -19,7 +20,12 @@ class _WelcomeViewState extends State<WelcomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Welcome to BlueCheck'),
+          title: const Text(
+            'Welcome to BlueCheck',
+            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          ),
+          // backgroundColor: Color.fromARGB(255, 58, 124, 211),
+          centerTitle: true,
           actions: [
             PopupMenuButton<MenuAction>(onSelected: (value) async {
               switch (value) {
@@ -41,9 +47,15 @@ class _WelcomeViewState extends State<WelcomeView> {
             })
           ],
         ),
-        body: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text('You have logged in'),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const Text('You have logged in'),
+              Lottie.asset('assets/lottie/19148-bluetooth-connected.json'),
+            ],
+          ),
+          
         ),
     );
   }

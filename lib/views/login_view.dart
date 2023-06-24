@@ -208,7 +208,7 @@ class _LoginViewState extends State<LoginView> {
                   ElevatedButton.icon(
                     key: const Key('loginForm_googleLogin_raisedButton'),
                     label: const Text(
-                      'SIGN IN WITH GOOGLE',
+                      'Continue with Google', 
                       style: TextStyle(color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -217,8 +217,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       // backgroundColor: theme.colorScheme.secondary,
                     ),
-                    icon:
-                        const Icon(Icons.gps_off_outlined, color: Colors.white),
+                    icon: Image.asset('assets/images/google-logo.png', height: 25),
                     onPressed: () => context
                         .read<AuthBloc>()
                         .add(const AuthEventGoogleLogin()),
