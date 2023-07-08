@@ -3,9 +3,8 @@ import 'package:bluecheck/services/auth/bloc/auth_bloc.dart';
 import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
+import 'package:bluecheck/services/blue/beacon_receive.dart';
 import 'package:bluecheck/services/blue/bluetooth_host.dart';
-import 'package:bluecheck/services/blue/bluetooth_receive_try_2.dart';
-import 'package:bluecheck/services/blue/bluetooth_receive.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
 import 'package:bluecheck/views/login_view.dart';
 import 'package:bluecheck/views/register_view.dart';
@@ -51,7 +50,7 @@ class HomePage extends StatelessWidget {
       }
     }, builder: (context, state) {
       if (state is AuthStateLoggedIn) {
-        return const BlueReceive2();
+        return const BeaconReceive();
       } else if (state is AuthStateNeedsVerification) {
         return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {

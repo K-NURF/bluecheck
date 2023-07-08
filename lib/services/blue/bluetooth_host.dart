@@ -16,7 +16,7 @@ class _BluetoothBeaconState extends State<BluetoothBeacon> {
   static const int majorId = 1;
   static const int minorId = 100;
   static const int transmissionPower = 4;
-  static const String identifier = 'com.example.myDeviceRegion';
+  static const String identifier = 'BlueCheckBeacon';
   static const AdvertiseMode advertiseMode = AdvertiseMode.lowLatency;
   static const String layout = BeaconBroadcast.ALTBEACON_LAYOUT;
   static const List<int> extraData = [125];
