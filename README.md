@@ -1,10 +1,8 @@
-# bluecheck
+# Bluecheck
 
-A new Flutter project.
+**Mobile application to Mark Attendance in Higher Academic Institutions Using Bluetooth Low Energy.**
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
+This project is Flutter based application, designed to help academic institutions mark attendance in a fast and efficient way
 
 A few resources to get you started if this is your first Flutter project:
 
