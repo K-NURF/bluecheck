@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' show Platform;
 import 'dart:math';
 import 'package:intl/intl.dart';
@@ -15,6 +16,8 @@ class BeaconReceive extends StatefulWidget {
 }
 
 class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserver{
+  static const String myUuid = '9150e244-1669-11ee-be56-0242ac120002';
+
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   new FlutterLocalNotificationsPlugin();
 
@@ -22,7 +25,8 @@ class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserv
   String _beaconResult = 'Not Scanned Yet.';
   int _nrMessagesReceived = 0;
   var isRunning = false;
-  List<String> _results = [];
+  final List<String> _results = [];
+  final receivedBeacons = <String>{};
   bool _isInForeground = true;
 
   final ScrollController _scrollController = ScrollController();
@@ -115,17 +119,28 @@ class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserv
 
     beaconEventsController.stream.listen(
             (data) {
-          if (data.isNotEmpty && isRunning) {
-            setState(() {
-              _beaconResult = data;
-              _results.add(_beaconResult);
-              _nrMessagesReceived++;
-            });
 
+          if (data.isNotEmpty && isRunning) {
+            Map<String, dynamic> beaconData = json.decode(data);
+            String uuid = beaconData['uuid'];
+            String majorId = beaconData['major'];
+            String minorId = beaconData['minor'];
+            if(uuid == myUuid && !receivedBeacons.contains('$majorId:$minorId')) {
+              print('I has met aaaaaaaaaaaall fufdsihbcibxshjc requuired');
+              setState(() {
+                // _beaconResult = data;
+                receivedBeacons.add('$majorId:$minorId');
+                _results.add(beaconData['major']);
+                _results.add(beaconData['minor']);
+
+                _nrMessagesReceived++;
+              });
+            }
             if (!_isInForeground) {
               _showNotification("Beacons DataReceived: " + data);
             }
 
+            print(receivedBeacons);
             print("Beacons DataReceived: " + data);
           }
         },
@@ -139,6 +154,7 @@ class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserv
 
     if (!mounted) return;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +172,7 @@ class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserv
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text('Total Results: $_nrMessagesReceived',
-                        style: Theme.of(context).textTheme.headline4?.copyWith(
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontSize: 14,
                           color: const Color(0xFF22369C),
                           fontWeight: FontWeight.bold,
@@ -211,7 +227,7 @@ class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserv
   void _showNotification(String subtitle) {
     var rng = new Random();
     Future.delayed(Duration(seconds: 5)).then((result) async {
-      var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
           'your channel id', 'your channel name',
           importance: Importance.high,
           priority: Priority.high,
@@ -228,7 +244,7 @@ class _BeaconReceiveState extends State<BeaconReceive> with WidgetsBindingObserv
 
   Widget _buildResultsList() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
         shrinkWrap: true,

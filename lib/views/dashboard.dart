@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class WelcomeView extends StatefulWidget {
-  const WelcomeView({super.key});
+class DashBoard extends StatefulWidget {
+  const DashBoard({super.key});
 
   @override
-  State<WelcomeView> createState() => _WelcomeViewState();
+  State<DashBoard> createState() => _DashBoardState();
 }
 
 enum MenuAction { logout }
 
 
-class _WelcomeViewState extends State<WelcomeView> {
+class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
