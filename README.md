@@ -1,20 +1,20 @@
-# BlueCheck
+# Bluecheck
 
 ## Mobile application to Mark Attendance in Higher Academic Institutions Using Bluetooth Low Energy.
 
 This project is Flutter based application, designed to help academic institutions mark attendance in a fast and efficient way
 
-#### Prerequisites for a fully running project
+### Prerequisites for a fully running project
 
 In order to effectively run this application one should have:
 
- - Flutter installed in PC.
+ - **Flutter installed in PC.**
 
 One can download and install it from the link below:
 
 [Flutter](https://flutter.dev/)
 
-- Android Studio
+- **Android Studio**
 
 One can download and install it from the link below:
 
@@ -25,7 +25,7 @@ After installation run the following command in terminal. Ensure you are in the 
 
 ```flutter doctor```
 
-#### What to expect in the application
+### What to expect in the application
 
 This application has:
 
@@ -45,7 +45,7 @@ Which contains the following:
   - Mark attendance
   - View attendance history
 
-#### How the application works
+### How the application works
 
 The application is designed to work differently for the lecturers and students. 
 
@@ -60,7 +60,6 @@ After that, they simply press the button to mark attendance, and a random pin is
 Once logged in and joined to a class all they have to do is to wait for the lecturer to broadcast the Bluetooth generated pin. This signal pops on their view as a button that prompts them to mark their attendance. Once the attendance marking process is done, they can view their attendance history. 
 
 
-#### Relevant Sources
+### Relevant Sources
 
 In order for the project to be complete, extensive research was done from articles of related works and youtube tutorials. 
-
