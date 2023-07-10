@@ -16,7 +16,7 @@ One can download and install it from the link below:
 After installation run the following command in terminal. Ensure you are in the flutter directory.
 
 
-``` {flutter doctor} ```
+```flutter doctor```
 
 **What to expect in the application**
 This application has:
