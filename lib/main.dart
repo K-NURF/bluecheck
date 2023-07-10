@@ -1,3 +1,4 @@
+import 'package:bluecheck/constants/routes.dart';
 import 'package:bluecheck/helpers/loading/loading_screen.dart';
 import 'package:bluecheck/services/auth/bloc/auth_bloc.dart';
 import 'package:bluecheck/services/auth/bloc/auth_event.dart';
@@ -5,6 +6,8 @@ import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
 import 'package:bluecheck/views/dashboard.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
+import 'package:bluecheck/views/host/create_session.dart';
+import 'package:bluecheck/views/host/send_beacon.dart';
 import 'package:bluecheck/views/login_view.dart';
 import 'package:bluecheck/views/register_view.dart';
 import 'package:bluecheck/views/verify_email_view.dart';
@@ -18,22 +21,23 @@ void main() async {
       debugShowCheckedModeBanner: false,
       title: 'BlueCheck',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 236, 160, 185)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 236, 160, 185)),
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
-        child:  const HomePage(),
+        child: const HomePage(),
       ),
-      // routes: {
-      //   createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
-      // },
+      routes: {
+        createClass: (context) => const CreateSession(),
+        scanBeacon: (context) => const ScanBeacon(),
+      },
     ),
   );
 }
 
 class HomePage extends StatelessWidget {
-
-   const HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
