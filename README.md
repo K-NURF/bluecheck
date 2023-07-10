@@ -4,11 +4,26 @@
 
 This project is Flutter based application, designed to help academic institutions mark attendance in a fast and efficient way
 
-A few resources to get you started if this is your first Flutter project:
+**Prerequisites for a fully running project**
+In order to effectively run this application one should have:
+ - Flutter installed in PC. 
+One can download and install it from the link below:
+[Flutter](https://flutter.dev/)
+- Android Studio
+One can download and install it from the link below:
+[Android Studio](https://developer.android.com/studio/install)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+After installation run the following command in terminal. Ensure you are in the flutter directory.
+`flutter doctor`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**What to expect in the application**
+This application has:
+1. Login and register page
+2. Additional user information page
+3. Lecturer side. 
+  - create class
+  - create session
+  - Mark attendance
+4. Student side
+  - Join class
+  - Mark attendance
