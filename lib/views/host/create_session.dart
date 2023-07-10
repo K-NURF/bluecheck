@@ -46,8 +46,8 @@ class _CreateSessionState extends State<CreateSession> {
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(
-                labelText: 'Class Name',
-                helperText: 'Enter a name for your class',
+                labelText: 'Session Name',
+                helperText: 'Enter a name for your session',
                 border: OutlineInputBorder(),
               ),
             ),
