@@ -9,6 +9,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class FirebaseAuthProvider implements AuthProvider {
+
+  Future<void> updateName(String name) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await user.updateDisplayName(name);
+    } else {
+      throw UserNotLoggedInException;
+    }
+  }
+
+  Future<String> getDisplayName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.displayName ?? '';
+    } else {
+      throw UserNotLoggedInException;
+    }
+  }
+
   @override
   Future<void> initialize() async {
     await Firebase.initializeApp(

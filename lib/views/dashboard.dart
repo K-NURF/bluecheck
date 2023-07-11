@@ -27,6 +27,10 @@ class _DashBoardState extends State<DashBoard> {
         // backgroundColor: Color.fromARGB(255, 58, 124, 211),
         centerTitle: true,
         actions: [
+          IconButton(onPressed: () {
+            Navigator.of(context).pushNamed(profile);
+          }, icon:const Icon(Icons.manage_accounts_sharp), ),
+          
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
               case MenuAction.logout:

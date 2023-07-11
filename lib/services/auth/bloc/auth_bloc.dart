@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(FirebaseAuthProvider provider)
@@ -112,7 +113,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               isLoading: false,
             ),
           );
-          emit(AuthStateLoggedIn(user: user, isLoading: false));
+          final updatedDetails = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.id)
+              .get();
+          if (updatedDetails.exists) {
+            emit(AuthStateLoggedIn(user: user, isLoading: false));
+          } else {
+            emit(const AuthStateNeedsDetails(isLoading: false));
+          }
         } on Exception catch (e) {
           emit(
             AuthStateLoggedOut(
@@ -155,7 +164,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 isLoading: false,
               ),
             );
-            emit(AuthStateLoggedIn(user: user, isLoading: false));
+            final updatedDetails = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.id)
+                .get();
+            if (updatedDetails.exists) {
+              emit(AuthStateLoggedIn(user: user, isLoading: false));
+            } else {
+              emit(const AuthStateNeedsDetails(isLoading: false));
+            }
           }
         } on Exception catch (e) {
           emit(
@@ -197,7 +214,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             isLoading: true, notVerified: false));
 
         provider.reloadUser;
-        await Future.delayed(const Duration(milliseconds: 750), () {
+        await Future.delayed(const Duration(milliseconds: 750), () async {
           try {
             final user = provider.currentUser;
             if (user != null) {
@@ -205,7 +222,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 emit(const AuthStateNeedsVerification(
                     isLoading: false, notVerified: true));
               } else {
-                emit(AuthStateLoggedIn(user: user, isLoading: false));
+                final updatedDetails = await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(user.id)
+                    .get();
+                if (updatedDetails.exists) {
+                  emit(AuthStateLoggedIn(user: user, isLoading: false));
+                } else {
+                  emit(const AuthStateNeedsDetails(isLoading: false));
+                }
               }
             } else {
               emit(const AuthStateLoggedOut(exception: null, isLoading: false));

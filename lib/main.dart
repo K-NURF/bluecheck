@@ -9,6 +9,7 @@ import 'package:bluecheck/views/forgot_password_view.dart';
 import 'package:bluecheck/views/host/create_session.dart';
 import 'package:bluecheck/views/host/send_beacon.dart';
 import 'package:bluecheck/views/login_view.dart';
+import 'package:bluecheck/views/profile.dart';
 import 'package:bluecheck/views/register_view.dart';
 import 'package:bluecheck/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,8 @@ void main() async {
       routes: {
         createClass: (context) => const CreateSession(),
         scanBeacon: (context) => const ScanBeacon(),
+        profile: (context) => const UserProfile(),
+        home: (context) => const DashBoard(),
       },
     ),
   );
@@ -62,6 +65,8 @@ class HomePage extends StatelessWidget {
         return const RegisterView();
       } else if (state is AuthStateForgotPassword) {
         return const ForgotPasswordView();
+      } else if (state is AuthStateNeedsDetails) {
+        return const UserProfile();
       } else {
         return const Scaffold(
           body: CircularProgressIndicator(),
