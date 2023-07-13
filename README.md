@@ -2,28 +2,7 @@
 
 ## Mobile application to Mark Attendance in Higher Academic Institutions Using Bluetooth Low Energy.
 
-This project is Flutter based application, designed to help academic institutions mark attendance in a fast and efficient way
-
-### Prerequisites for a fully running project
-
-In order to effectively run this application one should have:
-
- - **Flutter installed in PC.**
-
-One can download and install it from the link below:
-
-[Flutter](https://flutter.dev/)
-
-- **Android Studio**
-
-One can download and install it from the link below:
-
-[Android Studio](https://developer.android.com/studio/install)
-
-After installation run the following command in terminal. Ensure you are in the flutter directory.
-
-
-```flutter doctor```
+This project is a Flutter based application, designed to help academic institutions mark attendance in a fast and efficient way
 
 ### What to expect in the application
 
@@ -58,6 +37,27 @@ After that, they simply press the button to mark attendance, and a random pin is
 **Students**
 
 Once logged in and joined to a class all they have to do is to wait for the lecturer to broadcast the Bluetooth generated pin. This signal pops on their view as a button that prompts them to mark their attendance. Once the attendance marking process is done, they can view their attendance history. 
+
+### Prerequisites for a fully running project
+
+In order to effectively run this application one should have:
+
+**Flutter installed in PC.**
+
+One can download and install it from the link below:
+
+[Flutter](https://flutter.dev/)
+
+**Android Studio**
+
+One can download and install it from the link below:
+
+[Android Studio](https://developer.android.com/studio/install)
+
+After installation run the following command in terminal. Ensure you are in the flutter directory.
+
+
+```flutter doctor```
 
 
 ### Relevant Sources
