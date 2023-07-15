@@ -32,7 +32,6 @@ class _UserProfileState extends State<UserProfile> {
 
   int _addDetail = 1;
   int _fetchedAddDetail = 0;
-  bool _addDetails = false;
 
   @override
   void initState() {
@@ -84,7 +83,6 @@ class _UserProfileState extends State<UserProfile> {
               key != 'course' &&
               key != 'school' &&
               key != 'year') {
-            print('Key: $key, Value: $value');
             _fetchedAddDetail++;
             if (_fetchedAddDetail==1) {
               _key1Controller.text = key;
@@ -109,7 +107,6 @@ class _UserProfileState extends State<UserProfile> {
           }
         });
       }
-      print(_fetchedAddDetail);
     } catch (error) {
       print('Failed to fetch data: $error');
     }
@@ -357,7 +354,6 @@ class _UserProfileState extends State<UserProfile> {
                       onPressed: () {
                         setState(() {
                           _addDetail++;
-                          _addDetails = true;
                         });
                       },
                       icon: const Icon(Icons.add),
@@ -388,19 +384,7 @@ class _UserProfileState extends State<UserProfile> {
                         final key5 = _key5Controller.text;
                         final value5 = _value5Controller.text;
 
-                        print(key1);
-                        print(value1);
-                        print(key2);
-                        print(value2);
-                        print(key3);
-                        print(value3);
-                        print(key4);
-                        print(value4);
-                        print(key5);
-                        print(value5);
-
                         if (key1.isNotEmpty && value1.isNotEmpty) {
-                          print('the first value is not empty');
                           _firestoreStorage.addDetails(
                             key1,
                             value1,
@@ -409,7 +393,6 @@ class _UserProfileState extends State<UserProfile> {
                         }
 
                         if (key2.isNotEmpty && value2.isNotEmpty) {
-                          print('the second value is not empty');
                           _firestoreStorage.addDetails(
                             key1,
                             value1,
@@ -420,7 +403,6 @@ class _UserProfileState extends State<UserProfile> {
                         }
 
                         if (key3.isNotEmpty && value3.isNotEmpty) {
-                          print('the third value is not empty');
                           _firestoreStorage.addDetails(
                             key1,
                             value1,
@@ -433,7 +415,6 @@ class _UserProfileState extends State<UserProfile> {
                         }
 
                         if (key4.isNotEmpty && value4.isNotEmpty) {
-                          print('the fourth value is not empty');
                           _firestoreStorage.addDetails(
                             key1,
                             value1,
@@ -448,7 +429,6 @@ class _UserProfileState extends State<UserProfile> {
                         }
 
                         if (key5.isNotEmpty && value5.isNotEmpty) {
-                          print('the fifth value is not empty');
                           _firestoreStorage.addDetails(
                             key1,
                             value1,
@@ -464,7 +444,7 @@ class _UserProfileState extends State<UserProfile> {
                           );
                         }
 
-                        Navigator.of(context).pushNamed(home);
+                        Navigator.of(context).pushNamedAndRemoveUntil(home, (route) => false);
                       }),
                 ],
               ),

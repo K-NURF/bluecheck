@@ -4,10 +4,11 @@ import 'package:bluecheck/services/auth/bloc/auth_bloc.dart';
 import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
+import 'package:bluecheck/services/blue/beacon_receive.dart';
 import 'package:bluecheck/views/dashboard.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
 import 'package:bluecheck/views/host/create_session.dart';
-import 'package:bluecheck/views/host/send_beacon.dart';
+import 'package:bluecheck/views/host/scan_beacon.dart';
 import 'package:bluecheck/views/login_view.dart';
 import 'package:bluecheck/views/profile.dart';
 import 'package:bluecheck/views/register_view.dart';
@@ -31,7 +32,7 @@ void main() async {
       ),
       routes: {
         createClass: (context) => const CreateSession(),
-        scanBeacon: (context) => const ScanBeacon(),
+        scanBeacon: (context) => const BeaconReceive(),
         profile: (context) => const UserProfile(),
         home: (context) => const DashBoard(),
       },
@@ -47,12 +48,12 @@ class HomePage extends StatelessWidget {
     context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state.isLoading) {
-        LoadingScreen().show(
+        CheckScreen().show(
           context: context,
           text: state.loadingText ?? 'Please wait ...',
         );
       } else {
-        LoadingScreen().hide();
+        CheckScreen().hide();
       }
     }, builder: (context, state) {
       if (state is AuthStateLoggedIn) {
