@@ -1,55 +1,63 @@
+import 'package:bluecheck/constants/routes.dart';
 import 'package:bluecheck/helpers/loading/loading_screen.dart';
 import 'package:bluecheck/services/auth/bloc/auth_bloc.dart';
 import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/services/auth/bloc/auth_state.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
+import 'package:bluecheck/services/blue/beacon_receive.dart';
+import 'package:bluecheck/views/dashboard.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
+import 'package:bluecheck/views/host/create_session.dart';
+import 'package:bluecheck/views/host/scan_beacon.dart';
 import 'package:bluecheck/views/login_view.dart';
+import 'package:bluecheck/views/profile.dart';
 import 'package:bluecheck/views/register_view.dart';
 import 'package:bluecheck/views/verify_email_view.dart';
-import 'package:bluecheck/views/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlueCheck',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 236, 160, 185)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 236, 160, 185)),
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
-        child:  const HomePage(),
+        child: const HomePage(),
       ),
-      // routes: {
-      //   createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
-      // },
+      routes: {
+        createClass: (context) => const CreateSession(),
+        scanBeacon: (context) => const BeaconReceive(),
+        profile: (context) => const UserProfile(),
+        home: (context) => const DashBoard(),
+      },
     ),
   );
 }
 
 class HomePage extends StatelessWidget {
-
-   const HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state.isLoading) {
-        LoadingScreen().show(
+        CheckScreen().show(
           context: context,
           text: state.loadingText ?? 'Please wait ...',
         );
       } else {
-        LoadingScreen().hide();
+        CheckScreen().hide();
       }
     }, builder: (context, state) {
       if (state is AuthStateLoggedIn) {
-        return const WelcomeView();
+        return const DashBoard();
       } else if (state is AuthStateNeedsVerification) {
         return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {
@@ -58,6 +66,8 @@ class HomePage extends StatelessWidget {
         return const RegisterView();
       } else if (state is AuthStateForgotPassword) {
         return const ForgotPasswordView();
+      } else if (state is AuthStateNeedsDetails) {
+        return const UserProfile();
       } else {
         return const Scaffold(
           body: CircularProgressIndicator(),

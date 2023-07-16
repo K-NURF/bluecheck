@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:bluecheck/helpers/loading/loading_screen_controller.dart';
 
-class LoadingScreen {
-  factory LoadingScreen() => _shared;
-  static final LoadingScreen _shared = LoadingScreen._sharedInstance();
-  LoadingScreen._sharedInstance();
+class CheckScreen {
+  factory CheckScreen() => _shared;
+  static final CheckScreen _shared = CheckScreen._sharedInstance();
+  CheckScreen._sharedInstance();
 
   LoadingScreenController? controller;
 
