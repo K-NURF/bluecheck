@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart';
 class UserDetails {
   final String name;
   final String school;
-  final Timestamp course;
-  final int year;
-  final int group;
+  final String course;
+  final String year;
+  final String group;
 //add capability of taking the aditional details
   const UserDetails({
     required this.name,
@@ -17,10 +17,10 @@ class UserDetails {
     required this.group,
   });
 
-  UserDetails.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : name = snapshot.data()['name'],
-        school = snapshot.data()['school'],
-        course = snapshot.data()['course'],
-        year = snapshot.data()['year'],
-        group = snapshot.data()['group'];
+  UserDetails.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : name = snapshot.data()?['name'],
+        school = snapshot.data()?['school'],
+        course = snapshot.data()?['course'],
+        year = snapshot.data()?['year'],
+        group = snapshot.data()?['group'];
 }

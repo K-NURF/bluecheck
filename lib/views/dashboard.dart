@@ -4,10 +4,13 @@ import 'package:bluecheck/services/auth/bloc/auth_event.dart';
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
 import 'package:bluecheck/services/cloud/firestore_storage.dart';
 import 'package:bluecheck/utilities/dialogs/logout_dialog.dart';
+import 'package:bluecheck/views/host/attendees.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../services/cloud/session_format.dart';
+import '../services/cloud/sessiondetails_format.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
@@ -20,6 +23,7 @@ enum MenuAction { logout }
 
 class _DashBoardState extends State<DashBoard> {
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController2 = ScrollController();
   FirestoreStorage firestoreStorage = FirestoreStorage();
 
   @override
@@ -77,7 +81,7 @@ class _DashBoardState extends State<DashBoard> {
                     onPressed: () {
                       Navigator.of(context).pushNamed(createClass);
                     },
-                    child: const Text('Create Class'),
+                    child: const Text('Create Session'),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -118,7 +122,7 @@ class _DashBoardState extends State<DashBoard> {
                             child: _userSessionsList(),
                           ),
                           Center(
-                            child: Text('Data for Tab 2'),
+                            child: _userListAttended(),
                           ),
                         ],
                       ),
@@ -136,7 +140,7 @@ class _DashBoardState extends State<DashBoard> {
   Widget _userSessionsList() {
     return Scrollbar(
       thumbVisibility: true,
-      controller: _scrollController,
+      controller: _scrollController2,
       child: ListView.separated(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
@@ -159,9 +163,59 @@ class _DashBoardState extends State<DashBoard> {
                       fontWeight: FontWeight.normal,
                     ),
               ),
-              subtitle: Text(session.created.toString()),
+
+              // ...
+              subtitle: Text(
+                  'Created at: ${DateFormat('kk:mm – dd-MM-yyyy').format(session.created.toDate())}'),
               onTap: () {
-                
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (route) =>
+                        Attendees(sessionId: session.sessionId)));
+
+                // Navigator.of(context)
+                //     .pushNamedAndRemoveUntil(home, (route) => false);
+              });
+          return item;
+        },
+      ),
+    );
+  }
+  
+  Widget _userListAttended() {
+    return Scrollbar(
+      thumbVisibility: true,
+      controller: _scrollController,
+      child: ListView.separated(
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        physics: const ScrollPhysics(),
+        controller: _scrollController,
+        itemCount: sessionListId.length,
+        separatorBuilder: (BuildContext context, int index) => const Divider(
+          height: 1,
+          color: Colors.black,
+        ),
+        itemBuilder: (context, index) {
+          SessionId session = sessionListId[index];
+          final item = ListTile(
+              title: Text(
+                session.sessionName,
+                textAlign: TextAlign.justify,
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontSize: 14,
+                      // color: const Color(0xFF1A1B26),
+                      fontWeight: FontWeight.normal,
+                    ),
+              ),
+
+              // ...
+              subtitle: Text(
+                  'Attended at: ${DateFormat('kk:mm – dd-MM-yyyy').format(session.time.toDate())}'),
+              onTap: () {
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (route) =>
+                //         Attendees(sessionId: session.sessionId)));
+
                 // Navigator.of(context)
                 //     .pushNamedAndRemoveUntil(home, (route) => false);
               });
@@ -176,18 +230,20 @@ class _DashBoardState extends State<DashBoard> {
   void mapUsersSessions() async {
     final currentUser = FirebaseAuthProvider().currentUser!;
     final session = await firestoreStorage.fetchUserSessions(currentUser.id);
+    print(session);
     setState(() {
       sessionList = List.from(session);
     });
-    print(sessionList);
   }
+
+  List<SessionId> sessionListId = [];
+
   void mapUsersDetails() async {
-    final currentUser = FirebaseAuthProvider().currentUser!;
-    final details = await firestoreStorage.fetchUserAttended(currentUser.id);
+    final details = await firestoreStorage.fetchUserAttended();
     print('Trying to print details');
     print('details $details');
     setState(() {
-      // sessionList = List.from(session);
+      sessionListId = List.from(details);
     });
     // print(sessionList);
   }

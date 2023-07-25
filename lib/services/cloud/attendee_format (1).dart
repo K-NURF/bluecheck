@@ -5,16 +5,13 @@ import 'package:flutter/foundation.dart';
 class Attendee {
   final Timestamp created;
   final String userId;
-  final String name;
 
   const Attendee({
-    required this.name,
     required this.created,
     required this.userId,
   });
 
   Attendee.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : created = snapshot.data()['time'],
-        name = snapshot.data()['name'],
         userId = snapshot.data()['userId'];
 }
