@@ -61,16 +61,13 @@ class _UserProfileState extends State<UserProfile> {
 
     try {
       DocumentSnapshot docSnapshot = await docRef.get();
-      String name = await _firebaseAuthProvider.getDisplayName();
-      setState(() {
-        _nameController.text = name;
-      });
 
       if (docSnapshot.exists) {
         Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
 
         setState(() {
           // Update the text controller values with the retrieved data
+          _nameController.text = data['name'] ?? '';
           _courseController.text = data['course'] ?? '';
           _groupController.text = data['group'] ?? '';
           _schoolController.text = data['school'] ?? '';
@@ -82,25 +79,26 @@ class _UserProfileState extends State<UserProfile> {
           if (key != 'group' &&
               key != 'course' &&
               key != 'school' &&
+              key != 'name' &&
               key != 'year') {
             _fetchedAddDetail++;
-            if (_fetchedAddDetail==1) {
+            if (_fetchedAddDetail == 1) {
               _key1Controller.text = key;
               _value1Controller.text = value;
             }
-            if (_fetchedAddDetail==2) {
+            if (_fetchedAddDetail == 2) {
               _key2Controller.text = key;
               _value2Controller.text = value;
             }
-            if (_fetchedAddDetail==3) {
+            if (_fetchedAddDetail == 3) {
               _key3Controller.text = key;
               _value3Controller.text = value;
             }
-            if (_fetchedAddDetail==4) {
+            if (_fetchedAddDetail == 4) {
               _key4Controller.text = key;
               _value4Controller.text = value;
             }
-            if (_fetchedAddDetail==5) {
+            if (_fetchedAddDetail == 5) {
               _key5Controller.text = key;
               _value5Controller.text = value;
             }
@@ -149,10 +147,10 @@ class _UserProfileState extends State<UserProfile> {
             child: Center(
               child: Text('Add/Update your details to help identify you better',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            // fontSize: 18,
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            // fontWeight: FontWeight.bold,
-                          )),
+                        // fontSize: 18,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        // fontWeight: FontWeight.bold,
+                      )),
             ),
           ),
           Form(
@@ -169,6 +167,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  
                   TextField(
                     controller: _schoolController,
                     decoration: const InputDecoration(
@@ -369,9 +368,8 @@ class _UserProfileState extends State<UserProfile> {
                         final course = _courseController.text;
                         final group = _groupController.text;
 
-                        _firebaseAuthProvider.updateName(name);
                         _firestoreStorage.createUser(
-                            school, course, year, group);
+                            school, course, year, group, name);
 
                         final key1 = _key1Controller.text;
                         final value1 = _value1Controller.text;
@@ -383,6 +381,8 @@ class _UserProfileState extends State<UserProfile> {
                         final value4 = _value4Controller.text;
                         final key5 = _key5Controller.text;
                         final value5 = _value5Controller.text;
+
+                        // _firebaseAuthProvider.updateName(name);
 
                         if (key1.isNotEmpty && value1.isNotEmpty) {
                           _firestoreStorage.addDetails(
@@ -444,7 +444,8 @@ class _UserProfileState extends State<UserProfile> {
                           );
                         }
 
-                        Navigator.of(context).pushNamedAndRemoveUntil(home, (route) => false);
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil(home, (route) => false);
                       }),
                 ],
               ),

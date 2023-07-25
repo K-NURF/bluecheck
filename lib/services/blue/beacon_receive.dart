@@ -10,6 +10,7 @@ import 'package:beacons_plugin/beacons_plugin.dart';
 import 'package:bluecheck/utilities/dialogs/attend_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../cloud/session_format.dart';
@@ -284,13 +285,13 @@ class _BeaconReceiveState extends State<BeaconReceive>
                       fontWeight: FontWeight.normal,
                     ),
               ),
-              subtitle: Text(session.created.toString()),
+              subtitle: Text('Marked attendance at: ${DateFormat('kk:mm – dd-MM-yyyy').format(session.created.toDate())}'),
               onTap: () async {
                 final content =
                     'Are you sure you want to confirm attendance for ${session.name}?';
                 final attending = await showAttendDialog(context, content);
                 if (attending) {
-                  await firestoreStorage.createAttendee(session.sessionId);
+                  await firestoreStorage.markAttendance(session.sessionId, session.name);
                   // ignore: use_build_context_synchronously
                   showAnimationOverlay(context);
                   Navigator.of(context)

@@ -8,7 +8,6 @@ import 'package:bluecheck/services/blue/beacon_receive.dart';
 import 'package:bluecheck/views/dashboard.dart';
 import 'package:bluecheck/views/forgot_password_view.dart';
 import 'package:bluecheck/views/host/create_session.dart';
-import 'package:bluecheck/views/host/scan_beacon.dart';
 import 'package:bluecheck/views/login_view.dart';
 import 'package:bluecheck/views/profile.dart';
 import 'package:bluecheck/views/register_view.dart';
