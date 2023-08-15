@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
@@ -30,7 +32,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
       FlutterLocalNotificationsPlugin();
   FirestoreStorage firestoreStorage = FirestoreStorage();
 
-  String _tag = "Beacons Plugin";
+  final String _tag = "Beacons Plugin";
   // String _beaconResult = 'Not Scanned Yet.';
   int _nrMessagesReceived = 0;
   var isRunning = false;
@@ -89,7 +91,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
 
     if (Platform.isAndroid) {
       BeaconsPlugin.channel.setMethodCallHandler((call) async {
-        print("Method: ${call.method}");
+        // print("Method: ${call.method}");
         if (call.method == 'scannerReady') {
           _showNotification("Beacons monitoring started..");
           await BeaconsPlugin.startMonitoring();
@@ -144,9 +146,9 @@ class _BeaconReceiveState extends State<BeaconReceive>
 
                 _nrMessagesReceived++;
               });
-              print(receivedBeacons);
+              // print(receivedBeacons);
               mapSession();
-              print("Beacons DataReceived: " + data);
+              // print("Beacons DataReceived: " + data);
             }
             // if (!_isInForeground) {
             //   _showNotification("Beacons DataReceived: " + data);
@@ -155,7 +157,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
         },
         onDone: () {},
         onError: (error) {
-          print("Error at listener: $error");
+          // print("Error at listener: $error");
         });
 
     //Send 'true' to run in background
@@ -294,6 +296,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
                   await firestoreStorage.markAttendance(session.sessionId, session.name);
                   // ignore: use_build_context_synchronously
                   showAnimationOverlay(context);
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(home, (route) => false);
                 }
