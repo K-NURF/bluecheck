@@ -45,7 +45,7 @@ class _AttendeesState extends State<Attendees> {
     final got = await _firestoreStorage.getSessionDetails(widget.sessionId);
     setState(() {
       sesh = got;
-      print(sesh);
+      // print(sesh);
     });
   }
 
@@ -68,7 +68,7 @@ class _AttendeesState extends State<Attendees> {
         build: (pw.Context context) {
           return pw.Container(
             width: 300,
-            padding: pw.EdgeInsets.all(20),
+            padding: const pw.EdgeInsets.all(20),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
@@ -162,7 +162,7 @@ class _AttendeesState extends State<Attendees> {
             );
           } catch (e) {
             // Handle any sharing errors
-            print('Error sharing incident report: $e');
+            // print('Error sharing incident report: $e');
           }
         },
         tooltip: 'Export as PDF',

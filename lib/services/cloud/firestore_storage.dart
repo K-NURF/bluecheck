@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:bluecheck/services/auth/firebase_auth_provider.dart';
