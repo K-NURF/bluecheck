@@ -106,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
         });
       }
     } catch (error) {
-      print('Failed to fetch data: $error');
+      // print('Failed to fetch data: $error');
     }
   }
 

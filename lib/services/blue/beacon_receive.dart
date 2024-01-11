@@ -38,6 +38,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
   var isRunning = false;
   final List<String> _results = [];
   final receivedBeacons = <String>{};
+  final receivedIndex = 0;
   // bool _isInForeground = true;
 
   final ScrollController _scrollController = ScrollController();
@@ -148,6 +149,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
               });
               // print(receivedBeacons);
               mapSession();
+              receivedIndex + 2;
               // print("Beacons DataReceived: " + data);
             }
             // if (!_isInForeground) {
@@ -287,13 +289,15 @@ class _BeaconReceiveState extends State<BeaconReceive>
                       fontWeight: FontWeight.normal,
                     ),
               ),
-              subtitle: Text('Marked attendance at: ${DateFormat('kk:mm – dd-MM-yyyy').format(session.created.toDate())}'),
+              subtitle: Text(
+                  'Marked attendance at: ${DateFormat('kk:mm – dd-MM-yyyy').format(session.created.toDate())}'),
               onTap: () async {
                 final content =
                     'Are you sure you want to confirm attendance for ${session.name}?';
                 final attending = await showAttendDialog(context, content);
                 if (attending) {
-                  await firestoreStorage.markAttendance(session.sessionId, session.name);
+                  await firestoreStorage.markAttendance(
+                      session.sessionId, session.name);
                   // ignore: use_build_context_synchronously
                   showAnimationOverlay(context);
                   // ignore: use_build_context_synchronously
@@ -310,10 +314,10 @@ class _BeaconReceiveState extends State<BeaconReceive>
   List<Session> sessionList = [];
 
   void mapSession() async {
-    print(_results[0]);
-    print(_results[1]);
+    // print(_results[0]);
+    // print(_results[1]);
     final session =
-        await firestoreStorage.whichSession(_results[0], _results[1]);
+        await firestoreStorage.whichSession(_results[receivedIndex], _results[receivedIndex + 1]);
     setState(() {
       sessionList = List.from(session);
     });
@@ -336,7 +340,7 @@ class _BeaconReceiveState extends State<BeaconReceive>
     Overlay.of(context).insert(overlayEntry);
 
     // Wait for the specified duration
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       // Remove the overlay entry after the duration
       overlayEntry.remove();
     });

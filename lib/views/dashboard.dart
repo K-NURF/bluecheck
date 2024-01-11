@@ -230,7 +230,7 @@ class _DashBoardState extends State<DashBoard> {
   void mapUsersSessions() async {
     final currentUser = FirebaseAuthProvider().currentUser!;
     final session = await firestoreStorage.fetchUserSessions(currentUser.id);
-    print(session);
+    // print(session);
     setState(() {
       sessionList = List.from(session);
     });
@@ -240,8 +240,8 @@ class _DashBoardState extends State<DashBoard> {
 
   void mapUsersDetails() async {
     final details = await firestoreStorage.fetchUserAttended();
-    print('Trying to print details');
-    print('details $details');
+    // print('Trying to print details');
+    // print('details $details');
     setState(() {
       sessionListId = List.from(details);
     });
